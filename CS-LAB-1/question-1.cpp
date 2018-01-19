@@ -205,6 +205,7 @@ void link :: display_l()
          cout<<pos->data<<" -> ";  //display the elements
          pos=pos->next; //goes to next element 
       }
+        cout<<"NULL \n ";
     }
 }
 
