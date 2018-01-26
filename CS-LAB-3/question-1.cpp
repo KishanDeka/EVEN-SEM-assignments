@@ -1,33 +1,36 @@
-
 #include <iostream>
-
 using namespace std;
 
 class node
 {
-  public:
-    int data;
-    node *next;
-    node *prev;
+    public :
+      double data;
+      node *next;
+      node *prev;
+    public :
+       node()
+       {
+           data = 0;
+           next = NULL;
+           prev = NULL;
+       }
 };
-class d_ll
+
+class c_ll
 {
     node *head;
-    node *tail;
-
     public :
-    d_ll()
-    {
-        head = NULL;
-        tail = NULL;
-    }
+       c_ll()
+       {
+          head = NULL;
+       }
 
-    void insert_dll(int data);
-    void insert_at(int pos, int data);
-    void delete_dll();
-    void delete_at(int pos);
-    void display();
-    int count_dll();
+       void insert_cll(double data);
+       void insert_at(int pos, double data);
+       void delete_cll();
+       void delete_at(int pos);
+       void display();
+       int count_cll();
 };
 
 void menu()
@@ -46,7 +49,7 @@ void menu()
 int main ()
 {
   char ch;
-  d_ll dll;
+  c_ll cll;
 
   while ( ch != 'x')
      {
@@ -63,7 +66,7 @@ int main ()
                 int data;
                 cout<<"\n Enter your data : ";
                 cin>>data;
-                dll.insert_dll(data);
+                cll.insert_cll(data);
                 cout<<"\n Data added. \n ";
                 cout<<" \n If you want to add more data press 'y' and hit 'Enter' \n Press any key and hit 'Enter' to exit this function \n ";
                 cin >> chr;
@@ -74,43 +77,43 @@ int main ()
         {
            int post, data;
            int num;
-           num = dll.count_dll(); //calling the count_l() function to check the number element in the list
+           num = cll.count_cll(); //calling the count_l() function to check the number element in the list
            cout<<"\n Enter the position where you want to insert a data : ";
            cin>>post;
            if (0 < post && post < num+1) //condition for nonempty linked list
            {
               cout<<"\n Enter the new data : ";
               cin >> data;
-              dll.insert_at(post, data); //calling the insert_at() function
+              cll.insert_at(post, data); //calling the insert_at() function
            }
            else { cout<<" Invalid position. \n ";} //condition when position entered is not valid for the linked list
 
         }
         else if (ch == 'd')
         {
-            dll.delete_dll();
+            cll.delete_cll();
         }
         else if (ch=='e')
         {
              int post;
              int num;
-             num = dll.count_dll();  //calling the count_l() function to check the number element in the list
+             num = cll.count_cll();  //calling the count_l() function to check the number element in the list
              cout <<"\n Enter the position of data you want to delete : ";
              cin >> post;
              if (0 < post && post <= num)  //condition for nonempty linked list
              {
-                dll.delete_at(post);  //calling the delete_at() function
+                cll.delete_at(post);  //calling the delete_at() function
              }
              else {cout<<"Invalid position.";}  //condition when position entered is not valid for the linked list
         }
         else if (ch=='f')
         {
            cout<<"\n These are your data :"<<endl;
-           dll.display();
+           cll.display();
         }
         else if (ch == 'g')
         {  int num;
-           num = dll.count_dll();
+           num = cll.count_cll();
            cout<<"\n There is ";
            cout<<num;
            cout<<" elements in your linked list. \n ";
@@ -128,28 +131,23 @@ int main ()
 return 0;
 }
 
-void d_ll :: insert_dll(int data)
+
+void c_ll :: insert_cll(double data)
 {
-   node *temp=new node;
-   temp->data=data;
-   temp->next=NULL;
-   temp->prev=NULL;
-   if (head==NULL)
-   {
-       head=temp;
-       tail=temp;
-   }
-   else
-   {
-       temp->prev=tail;
-       tail->next=temp;
-       temp->next=NULL;
-       tail=tail->next;
-       cout<<"added"<<endl;
-   }
+    node* temp=new node; //creating a new object
+	temp->data=data; //storing the data in temp
+	if(head!=NULL){
+		temp->prev = head->prev; //point the prev of temp to  the previously last element
+		(head->prev)->next=temp; // point the next of previously last element to temp
+	}
+	else {
+		head=temp; //makes the new node as head
+	}
+	head->prev = temp; //shifts tail to temp
+	temp->next=head;
 }
 
-void d_ll :: insert_at(int post, int data)
+void c_ll :: insert_at(int post, double data)
 {
    node *pos;
    node *temp=new node;
@@ -175,21 +173,41 @@ void d_ll :: insert_at(int post, int data)
    }
 }
 
-void d_ll :: delete_dll()
+void c_ll :: display()
+{
+    node *pos;
+    pos=head;
+    if (head==NULL)
+    {
+        cout<<"your list is empty.";
+    }
+    else
+    {
+      do
+      {
+         cout<<pos->data<<" -> ";
+         pos=pos->next;
+      }
+      while (pos != head);
+        cout<<"NULL \n ";
+    }
+}
+
+void c_ll :: delete_cll()
 {
    if (head != NULL)
    {
-     while (head->next != NULL)
+     while (head->next != head)
      {
         node *pos;
         pos = head;
-        while (pos->next != NULL)
+        while (pos->next != head)
         {
            pos = pos->next;
         }
         pos = pos->prev;
         delete pos->next;
-        pos->next = NULL;
+        pos->next = head;
      }
      head = NULL;
      cout<<"\n Your linked list is deleted.\n ";
@@ -197,7 +215,7 @@ void d_ll :: delete_dll()
    else { cout<<"\n There is no element to delete \n "; }
 }
 
-void d_ll :: delete_at(int post)
+void c_ll :: delete_at(int post)
 {
    node *pos;
    pos = head;
@@ -214,27 +232,8 @@ void d_ll :: delete_at(int post)
    delete del;
 }
 
-void d_ll :: display()
-{
-    node *pos;
-    pos=head;
-    if (head==NULL)
-    {
-        cout<<"your list is empty.";
-    }
-    else
-    {
-       while (pos != NULL)
-      {
-         cout<<pos->data<<" -> ";
-         pos=pos->next;
-      }
-        cout<<"NULL \n ";
 
-    }
-}
-
-int d_ll :: count_dll()
+int c_ll :: count_cll()
 {
     node *pos;  //create a new node type pointer called 'pos'
     pos = head;  //makes the address of 'pos' and 'head' same
@@ -251,7 +250,7 @@ int d_ll :: count_dll()
 
     else
     {
-        while (pos->next != tail)
+        while ((pos->next)->next != head)
         {
             pos = pos->next;
             i++;
@@ -259,3 +258,7 @@ int d_ll :: count_dll()
         return i; //return the number of element present
     }
 }
+
+
+
+
