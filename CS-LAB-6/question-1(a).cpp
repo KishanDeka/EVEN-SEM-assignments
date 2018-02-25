@@ -4,24 +4,23 @@ using namespace std;
 
 int bsearch(int arr[], int num, int left, int right)
 {
-    int mid = (left+right)/2;    //create a variable for middle position
+    int mid = (left+right)/2;          //create a variable for middle position
     if (arr[left]<=num && arr[right]>=num)
     {
-        if (arr[mid] == num)         //if the number is at middle
+        while(arr[mid] != num)         //if the number is not at middle
         {
-           return mid;
-        }
-        else
-        {
-           if (arr[mid] < num)        /*condition when number is in right of mid*/
+
+           if (arr[mid] < num)         /*condition when number is in right of mid*/
            {
-               return bsearch(arr,num,mid+1,right);
+               left = mid+1;
            }
-           else                       /*condition when number is in left of mid*/
+           else                        /*condition when number is in left of mid*/
            {
-               return bsearch(arr,num,left,mid-1);
+               right = mid-1;
            }
+           mid = (left+right)/2;       /*'mid' value for while loop*/
         }
+        return mid;                    /*return mid value when num found*/
     }
     else { return -1; }       /*not found*/
 }
