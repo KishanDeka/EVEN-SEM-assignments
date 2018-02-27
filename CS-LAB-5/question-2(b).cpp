@@ -1,163 +1,149 @@
-#include <iostream>
-
+#include<iostream>
 using namespace std;
 
-class arraybubble
+class node              /*defining class node*/
 {
-    int size;
-public :
-    void insort()
-    {
-        cout << " Enter the size of array : ";
-        cin >> size;
-        double arr[size];
-        cout <<" Enter the elements of the array : "<<endl;
-        for (int i=0; i<size; i++)
-        {
-           cout<<" data "<<i+1<<" : ";
-           cin>>arr[i];
-        }
-        cout<<" This is the array you have entered : "<<endl;
-        cout<<" { ";
-        for (int i=0; i<size; i++)
-        {
-           cout<<arr[i]<<"   ";
-        }
-        cout<<"}"<<endl;
-        for (int i=0; i<size; i++)
-        {
-            for (int j=0;j<size-1; j++)
-            {
-                 if (arr[j]>arr[j+1])
-                 {
-                     double temp=0;
-                     temp = arr[j];
-                     arr[j]= arr[j+1];
-                     arr[j+1] = temp;
-                 }
-            }
-        }
-        cout<<" This is your array after sorting : "<<endl;
-        cout<<" { ";
-        for (int k=0; k<size; k++)
-        {
-           cout<<arr[k]<<"   ";
-        }
-        cout<<"}";
-    }
+public :                /*make usable outside the class*/
+    double data;        /* creates a double type variable*/
+    node *next;         /*node type pointer*/
 };
 
-class node
+void swap(node *one, node *two)   /* function to swap two elements */
 {
-public :
-    double data;
-    node *next;
-};
+    double t = one->data;        /* create a new variable */
+    one->data = two->data;           /* 'a' becomes equal to 'b' */
+    two->data = t;            /* 'b' becomes equal to 't' */
+}
 
-class ll_bubble
+class quick_ll               /*creating class for linked list*/
 {
-node *head;
-node *tail;
-public :
-    ll_bubble()
+public :                    /*makes usable outside the class*/
+    node *head;             /*creates head of ll*/
+    node *tail;             /*creates tail of ll*/
+    quick_ll()              /*constructor for ll*/
     {
-        head = NULL;
-        tail = NULL;
+        head = NULL;        /*makes head NULL*/
+        tail = NULL;        /*makes tail NULL*/
+    }
+    void link :: insert_list(int data)
+    {
+        node *temp = new node; /*create a new node type object called 'temp'*/
+        temp->data = data;   /*data input is inserted in data part of temp*/
+        if (head == NULL)   /*condition for empty list*/
+        {
+            head=temp;   /*make 'head' and 'temp' same*/
+            tail=temp;   /*make 'tail' and 'temp' same*/
+            temp->next = NULL;  /*points 'next' of temp to null*/
+        }
+        else    /*condition for nonempty list*/
+        {
+           tail->next = temp;  /*points 'next' of tail to temp*/
+           temp->next = NULL;  /*points 'next' pointer of temp to null*/
+           tail=temp;   /*make 'temp' and 'tail' same*/
+        }
+    }
+    void link :: display_l()
+    {
+        node *pos;  /*create a new node type pointer called 'pos'*/
+        pos=head;  /*makes the address of 'pos' and 'head' same*/
+        if (head==NULL)
+        {
+            cout<<"your list is empty.";
+        }
+        else
+        {
+            while (pos != NULL)
+            {
+                cout<<pos->data<<" -> ";  /*display the elements*/
+                pos=pos->next; /*goes to next element*/ 
+            }
+        cout<<"NULL \n ";
+        }
     }
 
-    void input()
+    int partition_qll(int low, int high)
     {
-        int num;
-        cout<<"\n Enter the number of element you want to insert : ";
-        cin>>num;
-        cout<<" Enter your data : "<<endl;
-        for (int i=0; i<num; i++)
+        node *temp;
+        temp = head;
+        for(int i=0; i<high; i++)
         {
-            double data;
-            cout<<" data "<<i+1<<" : ";
-            cin>>data;
-            node *temp = new node; //create a new node type object called 'temp'
-            temp->data = data;   //data input is inserted in data part of temp
-            if (head == NULL)   //condition for empty list
+            temp = temp->next;
+        }
+        double pivot = temp->data;    /* pivot */
+        int i = low - 1;         /*creates a new variable */
+        /* implement for loop */
+        for (int j = low; j <= high-1; j++)      /*for loop*/
+        {
+            node *pos = head;         /*creating a new node type variable*/
+            for (int k=0; k<j; k++)    
             {
-                head=temp;   //make 'head' and 'temp' same
-                tail=temp;   //make 'tail' and 'temp' same
-                temp->next = NULL;  //points 'next' of temp to null
+                pos = pos->next;
             }
-            else    //condition for nonempty list
+            /* If current element is smaller than or
+              equal to pivot */
+            if (pos->data <= pivot)
             {
-                tail->next = temp;  //points 'next' of tail to temp
-                temp->next = NULL;  //points 'next' pointer of temp to null
-                tail=temp;   //make 'temp' and 'tail' same
+                i++;      /* increase index of smaller element by one unit */
+                node *pos_i = head;
+                for (int k=0; k<i; k++)
+                {
+                    pos_i = pos_i->next;
+                }
+                node *pos_j = head;
+                for (int k=0; k<j; k++)
+                {
+                    pos_j = pos_j->next;
+                }
+                swap(pos_i, pos_j);   /*swap  the data*/
             }
         }
-    }
-    void display_ll()
+    node *pos_i = head;            /*create a new node type variable*/
+    for (int k=0; k<i+1; k++)
     {
-        node *pos;  //create a new node type pointer called 'pos'
-        pos=head;  //makes the address of 'pos' and 'head' same
-        while (pos != NULL)
-        {
-            cout<<pos->data<<" -> ";  //display the elements
-            pos=pos->next; //goes to next element
-        }
-        cout<<"NULL \n";
+        pos_i = pos_i->next;
     }
-    void sort_ll()
+    node *pos_j = head;
+    for (int k=0; k<high; k++)
     {
-        node *pos;
-        pos = head;
-        while (pos->next != NULL)
-        {
-            node *post;
-            post = head;
-            while (post->next != NULL)
-            {
-              if (post->data > (post->next)->data)
-              {
-                  double temp;
-                  temp = post->data;
-                  post->data = (post->next)->data;
-                  (post->next)->data = temp;
-              }
-              post = post->next;
-            }
-            pos = pos->next;
-        }
+        pos_j = pos_j->next;
     }
+    swap(pos_i, pos_j);        /*swap the data*/
+    return (i + 1);            /*return the index of pivot*/
+}
+
+void sort_qll(int low, int high)
+{
+    if (low < high)
+    {
+        /* pivot is partitioning index, arr[p] is now
+           at right place */
+        int indx = partition_qll(low, high);
+        /* Separately sort elements before */
+        /* partition and after partition */
+        sort_qll(low, indx - 1);
+        sort_qll(indx + 1, high);
+    }
+}
 };
 
 int main()
 {
-    arraybubble ab;
-    ll_bubble llb;
-    int choice;
-    while (choice != 0)
+    quick_ll qll;
+    int size;
+    cout << " Enter the number of data you want to enter : ";
+    cin >> size;                 /*input for size*/
+    cout<<" Enter your data : \n";
+    for (int i=0; i<size; i++)   /*'for loop' to take input of elements*/
     {
-        cout<<"\n Choose what you want to use for bubble sorting :\n 1. Array     2. Linked list.";
-        cout<<"\n Enter '0' to exit."<<endl<<" Choice : ";
-        cin>>choice;
-        switch (choice)
-        {
-          case 1 :
-            ab.insort();
-            break;
-          case 2 :
-            llb.input();
-            cout<<" These are your data : \n ";
-            llb.display_ll();
-            llb.sort_ll();
-            cout<<" These are your data after sorting : \n ";
-            llb.display_ll();
-            break;
-          case 0 :
-            break;
-          default :
-            cout<<" Enter a valid choice. \n ";
-            break;
-        }
-        cout<<"\n Enter any key and hit 'enter' to do again. \n Enter '0' and hit 'enter to exit."<<endl;
-        cin>>choice;
+         double data;      /*creating new variable*/
+         cout<<" data "<<i+1<<" : ";
+         cin>>data;        /*input for data*/
+         qll.insert_qll(data);   /*calling insert function*/
     }
+    cout<<" Your data : \n ";
+    qll.display_qll();
+    qll.sort_qll(0,size-1);
+    cout<<" Sorted data : \n ";
+    qll.display_qll();
 return 0;
 }
