@@ -50,42 +50,37 @@ public :                    /*makes usable outside the class*/
                 cout<<pos->data<<" -> ";  /*display the elements*/
                 pos=pos->next; /*goes to next element*/
             }
-        cout<<"NULL \n ";
+        cout<<"NULL \n";
         }
     }
 
     int bsearch_ll(double num, int left, int right)   /*function for binary search*/
     {
         int mid=(left+right)/2;       /*defining a new variable*/
-        node *temp1=head;             /*create a new node*/
-        node *temp2=head;             /*create a new node*/
-        for(int i=0; i<left; i++)     /*for loop to go to left index*/
-        {
-            temp1=temp1->next;
-        }
-        for(int i=0; i<right; i++)    /*for loop to go to right index*/
-        {
-            temp2=temp2->next;
-        }
-        if (temp1->data<=num && temp2->data>=num)   /*condition for the number in the list*/
+        if (head->data<=num && tail->data>=num)   /*condition for the number in the list*/
         {
             node *pos=head;            /*create a node type variable*/
             for(int i=0; i<mid; i++)   /*for loop to get to mid index*/
             {
                 pos=pos->next;
             }
-            while(pos->data != num)        /*if the number is not at middle*/
+            while(pos->data != num)       /*if the number is not at middle*/
             {
 
-               if (pos->data < num)        /*condition when number is in right of mid*/
+               if (pos->data < num)       /*condition when number is in right of mid*/
                {
-                   left = mid+1;           /*mid+1 becomes new left*/
+                   left = mid+1;          /*mid+1 becomes new left*/
                }
-               else                        /*condition when number is in left of mid*/
+               else                       /*condition when number is in left of mid*/
                {
-                   right = mid-1;          /*mid-1 becomes new right*/
+                   right = mid-1;         /*mid-1 becomes new right*/
                }
-               mid = (left+right)/2;       /*'mid' value for while loop*/
+               mid = (left+right)/2;      /*'mid' value for while loop*/
+               pos=head;                  /*create a node type variable*/
+               for(int i=0; i<mid; i++)   /*for loop to get to mid index*/
+               {
+                   pos=pos->next;
+               }
             }
             return mid;                    /*return mid value when number is found*/
         }
