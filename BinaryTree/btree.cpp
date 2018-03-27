@@ -21,7 +21,7 @@ class btree{
 	void show();
 	void show_A(node* temp);
 	void del(int );
- 	int search(int );
+ 	void search(int );
 };
 
 int main(){
@@ -115,7 +115,7 @@ void  btree::show_A(node* temp){
 void btree::show(){
 	show_A(root);
 }
-int btree::search(int key){
+void btree::search(int key){
 	node* temp=root;
 	while(temp!=NULL){
 		if(key>temp->data){
