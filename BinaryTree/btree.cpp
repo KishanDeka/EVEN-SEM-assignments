@@ -98,7 +98,7 @@ void  btree::show_A(node* temp){
 		cout<<"Tree has not grown from seed"<<endl;
 	}
 	if(number==1){
-		cout<<"this tree has just born the value of it's root is :"<<endl;
+		cout<<"this tree has just born the value of it's root is :"<<root->data<<endl;
 	}
 
 	else{
