@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 
-class node{ 
+class node{
 	public:
 	int data;
 	node *parent,*left,*right;
@@ -13,123 +13,241 @@ class node{
 class btree{
 	node *root;
 	int number=0;
-	public:
-	btree(){
+public:
+	btree()
+	{
 		root=NULL;
 	}
-	void insert(int );
-	void show();
-	void show_A(node* temp);
-	void del(int );
- 	void search(int );
-};
 
-int main(){
-	cout<<"this is a program to grow tree and then maintain it"<<endl;
-	cout<<"We will provide necessary nutrients to it , but you have to command to grow it."<<endl;
-	cout<<"buying seed..\nDone."<<endl;
-	btree t;
-	cout<<"this tree needs values to make it branches and leaves, Please provide values when asked"<<endl;
-	cout<<"We are showing you the tree"<<endl;
-	t.show();
-	cout<<"Enter one value to make the tree born"<<endl;
-	int data;
-	cin>>data;
-	t.insert(data);
-	t.show();
-	cout<<"\n\n\n How much values  you want to enter?"<<endl;
-	int num=0;
-	cin>>num;
-	for(int i =0; i<num;i++){
-		cout<<"Data"<<i+1<<": ";
-		int d;
-		cin>>d;
-		t.insert(d);
-		if(i==num){
-			break;
-		}
-	}
-	cout<<"tree is grown, check it by pressing any key and enter"<<endl;
-	cin>>num;
-	t.show();
-	cout<<"Enter a value to search in the tree"<<endl;
-	int key;
-	cin>>key;
-	t.search(key);
-	return 0;
-}
-void btree::insert(int d){
+void insert(int d)
+{
 	node* t=new node;
 	t->data=d;
-	if(root==NULL){
+	if(root==NULL)
+	{
 		root=t;
 	}
-	else {
+	else
+	{
 		node *next;
 		node* prev;
 		next=prev=root;
-		while(next!=NULL){
-			if(d> next->data){
+		while(next!=NULL)
+		{
+			if(d> next->data)
+			{
 				next=next->right;
 			}
-			else if(d<next->data){
+			else if(d<next->data)
+			{
 				next=next->left;
 			}
-			else {
+			else
+			{
 				cout<<"This value is already present"<<endl;
 				break;
 			}
-			if(next!=NULL){
+			if(next!=NULL)
+			{
 				prev=next;
 			}
 		}
 		t->parent=prev;
-		if(d>prev->data){
+		if(d>prev->data)
+		{
 			prev->right=t;
 		}
-		else if(d<prev->data){
+		else if(d<prev->data)
+		{
 			prev->left=t;
 		}
 	}
 	number++;
 }
-void  btree::show_A(node* temp){
-	if (root==NULL){
+
+ void  show_A(node* temp)
+ {
+	if (root==NULL)
+	{
 		cout<<"Tree has not grown from seed"<<endl;
 	}
-	if(number==1){
+	if(number==1)
+	{
 		cout<<"this tree has just born the value of it's root is :"<<root->data<<endl;
 	}
 
 	else{
-		if(temp==NULL){
+		if(temp==NULL)
+		{
 			return;
 		}
-		else{
+		else
+		{
 			show_A(temp->left);
 			cout<<temp->data<<",";
 			show_A(temp->right);
 		}
 	}
 }
-void btree::show(){
+
+void show()
+{
+    cout<<"These are your data in tree : \n ";
 	show_A(root);
 }
-void btree::search(int key){
+
+node* search_t(int key)
+{
 	node* temp=root;
 	while(temp!=NULL){
-		if(key>temp->data){
+		if(key>temp->data)
+		{
 			temp=temp->right;
 		}
-		else if(key<temp->data){
+		else if(key<temp->data)
+		{
 			temp=temp->left;
 		}
-		else {
-			cout<<"This data exists in the tree"<<endl;
+		else
+        {
+			return temp;
 			break;
 		}
 	}
-	if(temp==NULL){
-		cout<<"Value is not present in tree"<<endl;
+	if(temp==NULL)
+	{
+		return temp;
 	}
+}
+
+void delete_t(int key)
+{
+    node *temp;
+    temp = search_t(key);
+    if (temp!=NULL)
+    {
+        if (temp->right == NULL && temp->left==NULL)
+        {
+            if(temp == (temp->parent)->left)
+            {
+                (temp->parent)->left = NULL;
+            }
+            else
+            {
+                (temp->parent)->right = NULL;
+            }
+            temp->parent = NULL;
+        }
+        else if (temp->right == NULL || temp->left==NULL)
+        {
+            node *pos1, *pos2;
+            if (temp->right == NULL)
+            {
+                pos1 = temp->parent;
+                pos2 = temp->left;
+                temp->left = NULL;
+            }
+            else
+            {
+                pos1 = temp->parent;
+                pos2 = temp->right;
+                temp->right = NULL;
+            }
+            if (pos1->left == temp)
+            {
+                pos1->left = pos2;
+            }
+            else
+            {
+                pos1->right = pos2;
+            }
+            pos2->parent = pos1;
+            temp->parent = NULL;
+        }
+        else
+        {
+            node *pos = temp->right;
+            while(pos->left != NULL)
+            {
+                pos = pos->left;
+            }
+            node *right = pos->right;
+            if(pos->right!=NULL)
+            {
+                (pos->right)->parent = pos->parent;
+                (pos->parent)->left = pos->right;
+            }
+            else
+            {
+                (pos->parent)->left = NULL;
+            }
+            temp->data = pos->data;
+            pos->parent = NULL;
+            pos->right = NULL;
+        }
+        cout<<" Data "<<key<<" is deleted \n ";
+    }
+    else
+    {
+        cout<<"\n No data in tree. \n ";
+    }
+}
+};
+
+int main()
+{
+    btree bt;
+    int choice=9;
+    cout<<" Select what you want to do : ";
+    cout<<"\n 1.create a tree \n 2.Enter element in tree \n 3.Display \n 4.Search \n 5.Delete \n Enter '0' and hit enter to exit. \n";
+    while(choice!=0)
+    {
+        if(choice == 1)
+        {
+            cout<<" Tree is created. \n ";
+        }
+        if (choice == 2)
+        {
+        cout<<" How much values  you want to enter?"<<endl;
+     	int num=0;
+    	cin>>num;
+	    for(int i =0; i<num;i++)
+	    {
+	    	cout<<"Data"<<i+1<<": ";
+	     	int d;
+	    	cin>>d;
+	    	bt.insert(d);
+	    	if(i==num)
+	    	{
+		     	break;
+            }
+	    }
+	    }
+	    if (choice == 3)
+	    {
+	       bt.show();
+	    }
+	    if (choice == 4)
+	    {
+    	cout<<" \n Enter a value to delete from the tree"<<endl;
+    	int key;
+    	cin>>key;
+        node *temp=bt.search_t(key);
+        if (temp!=NULL)
+        {
+            cout<<" Found \n ";
+        }
+        else {cout<<" Not found.\n ";}
+	    }
+	    if(choice == 5)
+	    {
+	       cout<<" \n Enter a value to delete from the tree"<<endl;
+    	   int key;
+    	   cin>>key;
+    	   bt.delete_t(key);
+	    }
+	    cout<<"\n Choice : ";
+	    cin>>choice;
+    }
+return 0;
 }
