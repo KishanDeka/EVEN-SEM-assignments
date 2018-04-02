@@ -44,7 +44,7 @@ void insert(int d)
 			}
 			else
 			{
-				cout<<"This value is already present"<<endl;
+				cout<<"\n This value is already present.\n"<<endl;
 				break;
 			}
 			if(next!=NULL)
@@ -69,11 +69,11 @@ void insert(int d)
  {
 	if (root==NULL)
 	{
-		cout<<"Tree has not grown from seed"<<endl;
+		cout<<" Tree is empty. \n"<<endl;
 	}
 	if(number==1)
 	{
-		cout<<"this tree has just born the value of it's root is :"<<root->data<<endl;
+		cout<<" This tree has just one value of it's root is :"<<root->data<<endl;
 	}
 
 	else{
@@ -92,8 +92,9 @@ void insert(int d)
 
 void show()
 {
-    cout<<"These are your data in tree : \n ";
+    cout<<" These are your data in tree : \n";
 	show_A(root);
+	cout<<"\n ";
 }
 
 node* search_t(int key)
@@ -185,19 +186,22 @@ void delete_t(int key)
             pos->parent = NULL;
             pos->right = NULL;
         }
-        cout<<" Data "<<key<<" is deleted \n ";
+        cout<<" Data "<<key<<" is deleted \n";
+        number--;
     }
     else
     {
-        cout<<"\n No data in tree. \n ";
+        cout<<" No data in tree. \n";
     }
 }
+
+int num=0;
 
 void show_range(int skey, int lkey, node *temp)
 {
     if (root==NULL)
 	{
-		cout<<"Tree is empty."<<endl;
+		cout<<" Tree is empty. \n"<<endl;
 	}
 
 	else{
@@ -209,7 +213,10 @@ void show_range(int skey, int lkey, node *temp)
 		{
 			show_range(skey,lkey,temp->left);
 			if (temp->data >= skey && temp->data <= lkey)
-			{   cout<<temp->data<<","; }
+			{
+			     cout<<temp->data<<",";
+			     num++;
+            }
 			show_range(skey,lkey,temp->right);
 		}
 	}
@@ -218,20 +225,37 @@ void show_range(int skey, int lkey, node *temp)
 
 void show_r(int skey,int lkey)
 {
-    cout<<"Elements in "<<"("<<skey<<","<<lkey<<")"<<" range : \n ";
+    cout<<" Elements in "<<"("<<skey<<","<<lkey<<")"<<" range : \n";
     show_range(skey,lkey, root);
+    cout<<"\n There is "<<num<<" nodes in this range. \n";
+}
+
+void num_of_node()
+{
+    cout<<" There is "<<number<<" nodes in the tree. \n";
 }
 };
 
 int main()
 {
     btree bt;
-    cout<<" How many elements do  you want to enter?"<<endl;
+    int choice=9;
+    cout<<" Give your choice : \n";
+    cout<<" 1.create a tree \n 2.Enter element in tree \n 3.Display \n 4.Search \n 5.Delete \n 6.Search range \n 7.Number of node in tree \n Enter '0' and hit enter to exit. \n";
+    while(choice!=0)
+    {
+        if(choice == 1)
+        {
+            cout<<" Tree is created. \n";
+        }
+        if (choice == 2)
+        {
+        cout<<" How many values  you want to enter?"<<endl;
      	int num=0;
     	cin>>num;
 	    for(int i =0; i<num;i++)
 	    {
-	    	cout<<"Data"<<i+1<<": ";
+	    	cout<<" Data"<<i+1<<": ";
 	     	int d;
 	    	cin>>d;
 	    	bt.insert(d);
@@ -240,13 +264,46 @@ int main()
 		     	break;
             }
 	    }
-    bt.show();
-    cout<<"\n Enter the two number between which you want to display : \n";
-    int skey, lkey;
-    cout<<"small key :";
-    cin>>skey;
-    cout<<"large key :";
-    cin>>lkey;
-    bt.show_r(skey,lkey);
+	    }
+	    if (choice == 3)
+	    {
+	       bt.show();
+	    }
+	    if (choice == 4)
+	    {
+    	cout<<" Enter a value to serach the tree"<<endl;
+    	int key;
+    	cin>>key;
+        node *temp=bt.search_t(key);
+        if (temp!=NULL)
+        {
+            cout<<" Data "<<key<<" is Found \n";
+        }
+        else {cout<<" Not found.\n";}
+	    }
+	    if(choice == 5)
+	    {
+	       cout<<" Enter a value to delete from the tree"<<endl;
+    	   int key;
+    	   cin>>key;
+    	   bt.delete_t(key);
+	    }
+	    if (choice == 6)
+        {
+            cout<<" Enter the two number between which you want to display : \n";
+            int skey, lkey;
+            cout<<" small key :";
+            cin>>skey;
+            cout<<" large key :";
+            cin>>lkey;
+            bt.show_r(skey,lkey);
+        }
+        if (choice == 7)
+        {
+            bt.num_of_node();
+        }
+        cout<<" Choice : ";
+        cin>>choice;
+    }
 return 0;
 }
