@@ -78,10 +78,14 @@ void show()
 int main()
 {
    int key;
+   int n;
+   cout<<" How many data you want to input : ";
+   cin>>n;
    cout<<" Enter the data : "<<endl;;
-   for(int k=0;k<10;k++)
+   for(int k=0;k<n;k++)
    {
-       key = k+1;
+       cout<<" Data : ";
+       cin>>key;
        insert_A(key);
    }
    show();
