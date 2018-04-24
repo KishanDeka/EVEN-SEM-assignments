@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 int ar[10];     //define an array of size 10
-int top = -1;    //create a variable called top and assign value -1
+int top = -1;    //create a variable called top and assign value one value
 void push(int num);    //create push function
 void pop();            //create pop function
 void display();        //create display function
