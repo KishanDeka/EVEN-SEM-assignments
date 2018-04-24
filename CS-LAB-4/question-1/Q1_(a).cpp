@@ -36,7 +36,7 @@ class stack_ll   //create a stack class
             pos = pos->next;   //pos points to next node
             cout<<" The top element is "<<top->data<<endl;
             delete top;     //delete the top node
-            top = pos;      //makes top same as pos
+            top = pos;      //make top same as pos
             cout<<"This data is deleted. \n";
         }
         else {cout<<"The stack is empty. \n ";}
