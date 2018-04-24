@@ -14,7 +14,7 @@ void push(int num)     //defining push function
   else
   {
      top++;         //top's value increase by one
-     ar[top] = num;    //store the element in num 
+     ar[top] = num;    //store the element in num
   }
 }
 void pop()      //defining pop function
@@ -25,15 +25,16 @@ void pop()      //defining pop function
   }
   else
   {
-      top--;     //top's value decreases by one value
       cout<<"Deleted number is : ";
       cout<<ar[top];     //print top th element of arr
+      ar[top] = 0;
+      top--;     //top's value decreases by one value
   }
 }
 void display()      //defining display function
 {
    int top=9;          //creating top variable
-   if(top == -1)      
+   if(top == -1)
    {
       cout<<"Array is Empty or underflow.\n";
    }
@@ -59,7 +60,7 @@ int main()     //main function
        switch(ch)            //use switch
        {
            case '1' : cout<<"Enter a value : ";    //first case
-                      int num;                     //create variable num 
+                      int num;                     //create variable num
                       cin>>num;                    //input for num
                       push(num);                   //calling push function
                       break;
