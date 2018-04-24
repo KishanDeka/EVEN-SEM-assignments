@@ -37,7 +37,7 @@ int main()     //main function
      { case 1 :               //first case
          cout<<"Enter the data : ";      //ask for data
          double value;         //double type variable 'value'
-         cin>>value;          //takes input for value
+         cin>>value;          //takes input for "value"
          q.push(value);       //calling push function to push the value
          break;               //breaks first case
        case 2 :               //second case
