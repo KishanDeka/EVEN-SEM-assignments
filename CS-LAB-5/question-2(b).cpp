@@ -25,7 +25,7 @@ public :                    /*makes usable outside the class*/
         head = NULL;        /*makes head NULL*/
         tail = NULL;        /*makes tail NULL*/
     }
-    void link :: insert_list(int data)
+    void insert_list(int data)
     {
         node *temp = new node; /*create a new node type object called 'temp'*/
         temp->data = data;   /*data input is inserted in data part of temp*/
@@ -42,7 +42,7 @@ public :                    /*makes usable outside the class*/
            tail=temp;   /*make 'temp' and 'tail' same*/
         }
     }
-    void link :: display_l()
+    void display_l()
     {
         node *pos;  /*create a new node type pointer called 'pos'*/
         pos=head;  /*makes the address of 'pos' and 'head' same*/
@@ -55,7 +55,7 @@ public :                    /*makes usable outside the class*/
             while (pos != NULL)
             {
                 cout<<pos->data<<" -> ";  /*display the elements*/
-                pos=pos->next; /*goes to next element*/ 
+                pos=pos->next; /*goes to next element*/
             }
         cout<<"NULL \n ";
         }
@@ -75,7 +75,7 @@ public :                    /*makes usable outside the class*/
         for (int j = low; j <= high-1; j++)      /*for loop*/
         {
             node *pos = head;         /*creating a new node type variable*/
-            for (int k=0; k<j; k++)    
+            for (int k=0; k<j; k++)
             {
                 pos = pos->next;
             }
@@ -138,12 +138,12 @@ int main()
          double data;      /*creating new variable*/
          cout<<" data "<<i+1<<" : ";
          cin>>data;        /*input for data*/
-         qll.insert_qll(data);   /*calling insert function*/
+         qll.insert_list(data);   /*calling insert function*/
     }
     cout<<" Your data : \n ";
-    qll.display_qll();
+    qll.display_l();
     qll.sort_qll(0,size-1);
     cout<<" Sorted data : \n ";
-    qll.display_qll();
+    qll.display_l();
 return 0;
 }
